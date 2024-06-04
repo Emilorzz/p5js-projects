@@ -753,6 +753,7 @@ function keyPressed() {
     case 48:
       coverage = 0;
       initGrid();
+      algorithms[selectedAlg](start);
       break;
     case 49:
       if (doMenu) {
@@ -762,6 +763,7 @@ function keyPressed() {
       } else {
         coverage = 0.1;
         initGrid();
+        algorithms[selectedAlg](start);
       }
       break;
     case 50:
@@ -772,6 +774,7 @@ function keyPressed() {
       } else {
         coverage = 0.2;
         initGrid();
+        algorithms[selectedAlg](start);
       }
       break;
     case 51:
