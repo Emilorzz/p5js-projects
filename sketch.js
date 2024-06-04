@@ -77,7 +77,8 @@ function draw() {
   if (pathFound) {
     showSteps();
   } else {
-    noPath();
+    initGrid();
+    algorithms[selectedAlg](start);
   }
 
   showHelp();
@@ -273,7 +274,6 @@ function showHelp() {
 
     textAlign(RIGHT, TOP);
     textSize(textSizes[0]);
-    print(textSize());
     fill(255, 245);
     text("H -  HELP", 0, 0)
 
@@ -409,28 +409,28 @@ function drawPath(arr, aux, color) {
 }
 
 function initGrid() {
-  do {
-    index = 0;
-    path = [];
-    full = [];
-    pathaux = [];
-    fullaux = [];
-    setColors();
+  // do {
+  index = 0;
+  path = [];
+  full = [];
+  pathaux = [];
+  fullaux = [];
+  setColors();
 
-    pathFound = false;
-    grid = [];
-    for (let i = 0; i < cols; i++) {
-      grid[i] = [];
-      for (let j = 0; j < rows; j++) {
-        grid[i][j] = new Cell(i, j);
-      }
+  pathFound = false;
+  grid = [];
+  for (let i = 0; i < cols; i++) {
+    grid[i] = [];
+    for (let j = 0; j < rows; j++) {
+      grid[i][j] = new Cell(i, j);
     }
+  }
 
-    positions[selectedPos].function();
-    initWalls();
-    initNeighbors();
-    // algorithms[selected](start);
-  } while (!algorithms[selectedAlg](start) || path.length < 20);
+  positions[selectedPos].function();
+  initWalls();
+  initNeighbors();
+  // algorithms[selected](start);
+  // } while (!algorithms[selectedAlg](start) || path.length < 20);
 }
 
 function posRandom() {
@@ -791,6 +791,10 @@ function keyPressed() {
       break;
     case 55:
       coverage = 0.7;
+      initGrid();
+      break;
+    case 56:
+      coverage = 0.8;
       initGrid();
       break;
   }
