@@ -273,7 +273,6 @@ function showHelp() {
 
     textAlign(RIGHT, TOP);
     textSize(textSizes[0]);
-    print(textSize());
     fill(255, 245);
     text("H -  HELP", 0, 0)
 
