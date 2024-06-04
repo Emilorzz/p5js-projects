@@ -17,7 +17,7 @@ let selectedPos = 0;
 let algorithms = [dfs, astar];
 let selectedAlg = 1;
 
-let size, rows, cols;
+let size, maxSize, minSize, rows, cols;
 let grid;
 let coverage = 0.3;
 
@@ -46,7 +46,9 @@ function setup() {
 
   pausedFrame = 0;
   blinkFps = 90;
-  size = 30;
+  minSize = 30;
+  maxSize = 190;
+  size = minSize;
 
   cols = floor(windowWidth / size);
   rows = floor(windowHeight / size);
@@ -76,9 +78,10 @@ function draw() {
 
   if (pathFound) {
     showSteps();
-  } else {
+  } else if (!isPaused || doStep) {
     initGrid();
     algorithms[selectedAlg](start);
+    doStep = false;
   }
 
   showHelp();
@@ -303,8 +306,9 @@ function showHelp() {
     textElement(y += r, "SPACEBAR", "Toggle pause search", null, isPaused);
     textElement(y += 20, "N", "Step through search");
     textElement(y += r, "G", "Generate new grid");
-    textElement(y += r, "0 - 7", "0% - 70% wall coverage", "70% might take a while to generate\na grid that has a valid path", `${coverage * 100}%`);
-    textElement(y += r + 30, "D", "Toggle diagonal path", null, doDiagonal);
+    textElement(y += r, "0 - 8", "0% - 80% wall coverage", null, `${coverage * 100}%`);
+    textElement(y += r, "SHIFT + SCROLL", "Change cell size", null, `${map(size, minSize, maxSize, 1, (maxSize - minSize) / 5 + 1)}`);
+    textElement(y += r, "D", "Toggle diagonal path", null, doDiagonal);
     textElement(y += r, "Z", "Toggle show full path", null, showFull);
     textElement(y += r, "X", "Toggle show short path", null, showPath);
     textElement(y += r, "A", "Toggle animate path", null, doAnimation);
@@ -798,6 +802,28 @@ function keyPressed() {
       coverage = 0.8;
       initGrid();
       break;
+  }
+}
+
+function mouseWheel(event) {
+  if (keyIsDown(SHIFT)) {
+    let dsize = size;
+    if (event.delta > 0) {
+      dsize -= 5;
+    } else {
+      dsize += 5;
+    }
+    dsize = constrain(dsize, minSize, maxSize);
+
+    if (dsize != size) {
+      size = dsize;
+
+      cols = floor(windowWidth / size);
+      rows = floor(windowHeight / size);
+      initGrid();
+      print(size);
+      resizeCanvas(cols * size, rows * size);
+    }
   }
 }
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sketch</title>
+    <title>P5.js Projects</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
 
@@ -13,7 +13,24 @@
   </head>
 
   <body>
-    <script src="sketch.js"></script>
-    <script src="cell.js"></script>
+
+    <div class="menu">
+      <button type="button" onclick="loadProject()">Search Algorithms</button>
+      <script>
+
+        function loadProject() {
+          var head= document.getElementsByTagName('head')[0];
+          var script1= document.createElement('script1');
+          var script2= document.createElement('script2');
+          script1.setAttribute( 'src', 'sketch.js');
+          script2.setAttribute( 'src', 'cell.js');
+          head.appendChild(script1);
+          head.appendChild(script2);
+        }
+
+      </script>
+      <!-- <script src="sketch.js"></script>
+      <script src="cell.js"></script> -->
+    </div>
   </body>
 </html>
