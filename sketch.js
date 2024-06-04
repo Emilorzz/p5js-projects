@@ -431,6 +431,7 @@ function initGrid() {
   initNeighbors();
   // algorithms[selected](start);
   // } while (!algorithms[selectedAlg](start) || path.length < 20);
+  algorithms[selectedAlg](start);
 }
 
 function posRandom() {
