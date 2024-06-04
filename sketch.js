@@ -76,9 +76,10 @@ function draw() {
 
   if (pathFound) {
     showSteps();
-  } else {
+  } else if (!isPaused || doStep) {
     initGrid();
     algorithms[selectedAlg](start);
+    doStep = false;
   }
 
   showHelp();
@@ -303,8 +304,8 @@ function showHelp() {
     textElement(y += r, "SPACEBAR", "Toggle pause search", null, isPaused);
     textElement(y += 20, "N", "Step through search");
     textElement(y += r, "G", "Generate new grid");
-    textElement(y += r, "0 - 7", "0% - 70% wall coverage", "70% might take a while to generate\na grid that has a valid path", `${coverage * 100}%`);
-    textElement(y += r + 30, "D", "Toggle diagonal path", null, doDiagonal);
+    textElement(y += r, "0 - 8", "0% - 80% wall coverage", null, `${coverage * 100}%`);
+    textElement(y += r, "D", "Toggle diagonal path", null, doDiagonal);
     textElement(y += r, "Z", "Toggle show full path", null, showFull);
     textElement(y += r, "X", "Toggle show short path", null, showPath);
     textElement(y += r, "A", "Toggle animate path", null, doAnimation);
