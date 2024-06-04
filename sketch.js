@@ -10,6 +10,8 @@ let positions = [
   { function: posCorners, string: "Corners" },
 ];
 
+let textSizes;
+
 let selectedPos = 0;
 
 let algorithms = [dfs, astar];
@@ -32,6 +34,7 @@ let pausedFrame, blinkFps;
 function setup() {
   textFont('Courier New');
   textStyle(BOLD)
+
   doDiagonal = true;
   doAnimation = true;
   showFull = true;
@@ -48,6 +51,12 @@ function setup() {
   cols = floor(windowWidth / size);
   rows = floor(windowHeight / size);
   createCanvas(cols * size, rows * size);
+
+  textSizes = [
+    constrain(width * 0.03, 0, 30),
+    constrain(width * 0.03, 0, 16.3),
+    constrain(width * 0.03, 0, 10.7),
+  ]
 
   initGrid();
   setColors();
@@ -126,7 +135,7 @@ function showMenu() {
     translate(width - 30, 30);
 
     textAlign(RIGHT, TOP);
-    textSize(width * 0.03)
+    textSize(textSizes[0]);
     fill(255, 245);
     text("M -  Menu", 0, 0)
 
@@ -163,7 +172,7 @@ function showStats() {
     translate(width - 30, 60);
 
     textAlign(RIGHT, TOP);
-    textSize(width * 0.03)
+    textSize(textSizes[0]);
     fill(255, 245);
     text("S - STATS", 0, 0)
 
@@ -263,7 +272,8 @@ function showHelp() {
     translate(width - 30, 90);
 
     textAlign(RIGHT, TOP);
-    textSize(width * 0.03)
+    textSize(textSizes[0]);
+    print(textSize());
     fill(255, 245);
     text("H -  HELP", 0, 0)
 
@@ -309,7 +319,7 @@ function titleElement(string, w) {
   fill(200);
   translate(20, 20);
   textAlign(LEFT, TOP)
-  textSize(width * 0.025)
+  textSize(textSizes[0]);
   text(string, 0, 0)
 
   strokeWeight(5);
@@ -321,7 +331,7 @@ function titleElement(string, w) {
 function textElement(y, first, second = null, subtext = null, third = null, bool = null) {
   push();
 
-  textSize(width * 0.0175);
+  textSize(textSizes[1]);
 
   textAlign(RIGHT);
   text(first, x, y);
@@ -331,7 +341,7 @@ function textElement(y, first, second = null, subtext = null, third = null, bool
     push();
 
     if (bool) {
-      textSize(width * 0.019);
+      textSize(textSizes[1] * 1.1);
       fill(bool ? color(0, 200, 50) : color(200));
     }
     text(second, x + c, y);
@@ -342,7 +352,7 @@ function textElement(y, first, second = null, subtext = null, third = null, bool
   if (subtext != null) {
     push();
 
-    textSize(width * 0.0115);
+    textSize(textSizes[2]);
     fill(120);
     text(subtext, x + c, y + 20);
 
