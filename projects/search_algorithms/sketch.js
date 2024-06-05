@@ -822,7 +822,6 @@ function mouseWheel(event) {
       cols = floor(windowWidth / size);
       rows = floor(windowHeight / size);
       initGrid();
-      print(size);
       resizeCanvas(cols * size, rows * size);
     }
   }
