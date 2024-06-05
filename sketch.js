@@ -25,6 +25,8 @@ let emptyColor, startColor, endColor, visitedColor, visitedPathColor, wallColor,
 
 let start, end, mouseCell;
 let path, full, pathaux, fullaux;
+let drawRate = 10;
+let minPath;
 
 let index, w, r, c, h = 0;
 
@@ -75,13 +77,14 @@ function draw() {
       }
     }
   }
-
-  if (pathFound) {
+  if (!pathFound || path.length < minPath) {
+    if (!isPaused || doStep) {
+      initGrid();
+      doStep = false;
+    }
+  }
+  else {
     showSteps();
-  } else if (!isPaused || doStep) {
-    initGrid();
-    algorithms[selectedAlg](start);
-    doStep = false;
   }
 
   showHelp();
@@ -183,7 +186,7 @@ function showStats() {
     pop()
   }
   else if (doStats) {
-    let w = 320;
+    let w = 350;
     push();
 
     translate(width - w - width * 0.01, width * 0.01);
@@ -203,7 +206,11 @@ function showStats() {
     cvisited = getNumVisited();
     cpercent = floor(cvisited / ctotal * 10000) / 100;
 
-    textElement(y += 70, "Steps", fullaux.length);
+    textElement(y += 70, "Gridsize", `(${cols}, ${rows})`);
+    textElement(y += 20, "Min Path", `${minPath}`);
+    textElement(y += 20, "Draw Speed", `${doAnimation ? drawRate / 10 : "inf"} steps/frame`);
+
+    textElement(y += r, "Steps", fullaux.length);
     textElement(y += 20, "Path Length", pathaux.length);
     textElement(y += 20, "Tiles", ctotal);
     textElement(y += 20, "Visited", cvisited);
@@ -303,6 +310,8 @@ function showHelp() {
     textElement(y += r + 30, "RIGHT CLICK", "Place end cell");
     textElement(y += 20, "+ SHIFT", "Place / Remove wall");
     textElement(y += r, "P", "Start / End placement", null, positions[selectedPos].string);
+    textElement(y += r, "UP", "Increase Draw Speed", null, `${drawRate / 10}`);
+    textElement(y += 20, "DOWN", "Decrease Draw Speed");
     textElement(y += r, "SPACEBAR", "Toggle pause search", null, isPaused);
     textElement(y += 20, "N", "Step through search");
     textElement(y += r, "G", "Generate new grid");
@@ -399,9 +408,11 @@ function drawPath(arr, aux, color) {
 
   if (aux.length < arr.length) {
     if (!isPaused || doStep) {
-      aux.push(arr[index]);
-      index++;
-      doStep = false;
+      let newIndex = index + drawRate / 10;
+      for (let i = floor(index); i < newIndex && i < arr.length; i++) {
+        aux[i] = arr[i];
+      }
+      index = newIndex;  // Update index to the new position
     }
   }
 
@@ -420,6 +431,7 @@ function initGrid() {
   pathaux = [];
   fullaux = [];
   setColors();
+  minPath = floor((cols + rows) / 8);
 
   pathFound = false;
   grid = [];
@@ -779,28 +791,21 @@ function keyPressed() {
       }
       break;
     case 51:
-      coverage = 0.3;
-      initGrid();
-      break;
     case 52:
-      coverage = 0.4;
-      initGrid();
-      break;
     case 53:
-      coverage = 0.5;
-      initGrid();
-      break;
     case 54:
-      coverage = 0.6;
-      initGrid();
-      break;
     case 55:
-      coverage = 0.7;
+    case 56:
+      coverage = (keyCode - 48) * 0.1;
       initGrid();
       break;
-    case 56:
-      coverage = 0.8;
-      initGrid();
+    case 38: // up
+    case 40: // down
+      if (drawRate < 10) drawRate += (keyCode == 38 ? 1 : -1);
+      else if (drawRate == 10) drawRate += (keyCode == 38 ? 10 : -1);
+      else if (drawRate > 10) drawRate += (keyCode == 38 ? 10 : -10);
+
+      drawRate = constrain(drawRate, 1, 100);
       break;
   }
 }
