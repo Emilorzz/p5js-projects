@@ -203,6 +203,7 @@ function showStats() {
     y = 0;
 
     ctotal = getNumTiles();
+    wtotal = getNumWalls();
     cvisited = getNumVisited();
     cpercent = floor(cvisited / ctotal * 10000) / 100;
 
@@ -213,6 +214,7 @@ function showStats() {
     textElement(y += r, "Steps", fullaux.length);
     textElement(y += 20, "Path Length", pathaux.length);
     textElement(y += 20, "Tiles", ctotal);
+    textElement(y += 20, "Walls", `${wtotal}, ${coverage * 100}%`);
     textElement(y += 20, "Visited", cvisited);
     textElement(y += 20, "% explored", `${cpercent}%`);
 
@@ -239,6 +241,17 @@ function getNumTiles() {
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       if (grid[i][j].type != type.WALL) result++;
+    }
+  }
+
+  return result;
+}
+
+function getNumWalls() {
+  result = 0;
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      if (grid[i][j].type == type.WALL) result++;
     }
   }
 
