@@ -14,3 +14,9 @@ body {
   /* This centers our sketch vertically. */
   align-items: center;
 }
+
+#homeBtn {
+  position: absolute;
+  top: 1%;
+  left: 1%;
+}

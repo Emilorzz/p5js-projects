@@ -125,7 +125,6 @@ function initGame(difficulty = diff) {
   cols = diff.cols;
   rows = diff.rows;
   size = diff.size;
-  textScale = windowHeight * 0.02;
 
   board = [];
   bombs = [];
@@ -148,6 +147,8 @@ function initGame(difficulty = diff) {
   let w = cols * size + 2 * margin;
   let h = rows * size + banner + margin;
   resizeCanvas(w, h);
+
+  textScale = height * 0.02;
 }
 
 function initBombs() {
