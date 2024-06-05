@@ -437,27 +437,39 @@ function drawPath(arr, aux, color) {
   pop();
 }
 
-function initGrid() {
+function initGrid(shuffle = true) {
   index = 0;
   path = [];
   full = [];
   pathaux = [];
   fullaux = [];
   pathFound = false;
-  minPath = floor((cols + rows) / 8);
+  minPath = shuffle ? floor((cols + rows) / 8) : 0;
 
   setColors();
 
-  grid = [];
-  for (let i = 0; i < cols; i++) {
-    grid[i] = [];
-    for (let j = 0; j < rows; j++) {
-      grid[i][j] = new Cell(i, j);
+  if (shuffle) {
+    grid = [];
+    for (let i = 0; i < cols; i++) {
+      grid[i] = [];
+      for (let j = 0; j < rows; j++) {
+        grid[i][j] = new Cell(i, j);
+      }
+    }
+
+    positions[selectedPos].function();
+    initWalls();
+
+  } else {
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        if (grid[i][j].type == type.VISITED) {
+          grid[i][j].type = type.EMPTY;
+        }
+      }
     }
   }
 
-  positions[selectedPos].function();
-  initWalls();
   initNeighbors();
   algorithms[selectedAlg](start);
 }
@@ -470,28 +482,6 @@ function posRandom() {
 function posCorners() {
   start = grid[0][0];
   end = grid[cols - 1][rows - 1];
-}
-
-function resetCells() {
-  index = 0;
-  path = [];
-  full = [];
-  pathaux = [];
-  fullaux = [];
-  pathFound = false;
-  minPath = 0; // stops reset if user places end and start cells too close.
-
-  setColors();
-  initNeighbors();
-
-  for (let i = 0; i < cols; i++) {
-    for (let j = 0; j < rows; j++) {
-      if (grid[i][j].type == type.VISITED) {
-        grid[i][j].type = type.EMPTY;
-      }
-    }
-  }
-
 }
 
 function initWalls() {
@@ -696,8 +686,7 @@ function mousePressed() {
                   end = start;
                 }
                 start = grid[i][j];
-                resetCells();
-                algorithms[selectedAlg](start);
+                initGrid(false);
               }
             }
           }
@@ -706,8 +695,7 @@ function mousePressed() {
           if (keyIsDown(SHIFT)) {
             if (grid[i][j] !== start && grid[i][j] !== end) {
               grid[i][j].type = grid[i][j].type == type.WALL ? type.EMPTY : type.WALL;
-              resetCells();
-              algorithms[selectedAlg](start);
+              initGrid(false);
             }
           }
           else {
@@ -717,8 +705,7 @@ function mousePressed() {
                   start = end;
                 }
                 end = grid[i][j];
-                resetCells();
-                algorithms[selectedAlg](start);
+                initGrid(false);
               }
             }
           }
@@ -774,8 +761,7 @@ function keyPressed() {
       break;
     case 68: // D
       doDiagonal = !doDiagonal;
-      resetCells();
-      algorithms[selectedAlg](start);
+      initGrid(false);
       break;
     case 48:
       coverage = 0;
@@ -784,8 +770,7 @@ function keyPressed() {
     case 49:
       if (doMenu) {
         selectedAlg = 0;
-        resetCells();
-        algorithms[selectedAlg](start);
+        initGrid(false);
       } else {
         coverage = 0.1;
         initGrid();
@@ -794,8 +779,7 @@ function keyPressed() {
     case 50:
       if (doMenu) {
         selectedAlg = 1;
-        resetCells();
-        algorithms[selectedAlg](start);
+        initGrid(false);
       } else {
         coverage = 0.2;
         initGrid();
