@@ -13,7 +13,7 @@ class Cell {
 
   show() {
     push();
-    strokeWeight(3);
+    strokeWeight(size / 10);
     stroke(theme.strk);
 
     if (!this.isRevealed) {
@@ -50,16 +50,16 @@ class Cell {
     rect(this.x, this.y, this.s);
 
     strokeCap(SQUARE);
-    strokeWeight(3);
+    strokeWeight(size / 12);
     stroke(theme.text);
     let poleX = this.x + this.s / 2;
-    let flagSize = 10;
-    let cellMargin = 6;
+    let flagSize = size / 3;
+    let cellMargin = size / 6;
     let footY = this.y + size - cellMargin * 1.5;
     line(poleX, this.y + cellMargin, poleX, footY);
 
     fill(0);
-    ellipse(poleX, footY, 5, 1.5);
+    ellipse(poleX, footY, size / 5, size / 15);
 
     strokeWeight(0);
     fill(255, 0, 0);
@@ -82,13 +82,13 @@ class Cell {
     circle(this.x + this.s / 2, this.y + this.s / 2, this.s / 2);
 
     stroke(theme.text);
-    strokeWeight(4);
+    strokeWeight(size / 10);
     strokeCap(PROJECT);
 
     angleMode(DEGREES);
     let pinX = this.x + this.s / 2;
     let pinY = this.y + this.s / 2;
-    let pinLength = 7;
+    let pinLength = size / 4;
     let pins = 8;
 
     translate(pinX, pinY);
@@ -111,7 +111,7 @@ class Cell {
       colorMode(HSB);
       noStroke();
       textFont(font);
-      textSize(15);
+      textSize(size * 0.5);
       textAlign(CENTER, CENTER)
       fill(map(this.value, 1, 8, 255, 0), 75, 100);
       text(this.value, this.x + this.s / 2, this.y + this.s / 2);

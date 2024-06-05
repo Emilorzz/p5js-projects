@@ -22,6 +22,7 @@ let bombs;
 let banner = 100;
 let margin = 20;
 let textShown;
+let textScale;
 
 let alph = 150;
 let increasing = false;
@@ -30,10 +31,11 @@ let timer, prevTimer, infoY, time;
 let firstClicked;
 
 class Difficulty {
-  constructor(mines, cols, rows) {
+  constructor(mines, cols, rows, size) {
     this.mines = mines;
     this.cols = cols;
     this.rows = rows;
+    this.size = size;
     this.highscore = Infinity;
   }
 }
@@ -51,9 +53,9 @@ class Theme {
 let lt, dt, theme;
 
 let difficulties = {
-  easy: new Difficulty(10, 10, 10),
-  medium: new Difficulty(40, 16, 16),
-  hard: new Difficulty(99, 30, 16),
+  easy: new Difficulty(10, 10, 10, 34),
+  medium: new Difficulty(40, 16, 16, 21.2),
+  hard: new Difficulty(99, 30, 16, 21.2),
 };
 
 let diff = difficulties.easy;
@@ -86,7 +88,8 @@ function setup() {
   mines = diff.mines;
   cols = diff.cols;
   rows = diff.rows;
-  size = 30;
+  size = 21;
+
   createCanvas(cols * size + 2 * margin, rows * size + banner + margin);
 
   initGame();
@@ -94,7 +97,6 @@ function setup() {
 
 function draw() {
   background(theme.bg);
-
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       board[i][j].show();
@@ -106,6 +108,7 @@ function draw() {
   stroke(theme.strk);
   strokeWeight(5);
   rect(margin, banner, width - 2 * margin, height - margin - banner);
+
   pop();
 
   drawTimer();
@@ -121,6 +124,8 @@ function initGame(difficulty = diff) {
   mines = diff.mines;
   cols = diff.cols;
   rows = diff.rows;
+  size = diff.size;
+  textScale = windowHeight * 0.02;
 
   board = [];
   bombs = [];
@@ -139,7 +144,10 @@ function initGame(difficulty = diff) {
 
   initBombs();
   getValues();
-  resizeCanvas(cols * size + 2 * margin, rows * size + banner + margin);
+
+  let w = cols * size + 2 * margin;
+  let h = rows * size + banner + margin;
+  resizeCanvas(w, h);
 }
 
 function initBombs() {
@@ -200,9 +208,9 @@ function drawTimer() {
   push();
   textFont(font);
   fill(theme.text);
-  textSize(8);
+  textSize(textScale);
   text("Time:", margin, infoY - 20);
-  textSize(12);
+  textSize(textScale * 1.3);
   if (!lost && !won) {
     time = millis();
   }
@@ -217,9 +225,9 @@ function drawHighScore() {
   textFont(font);
   textAlign(RIGHT);
   fill(theme.text);
-  textSize(8);
+  textSize(textScale);
   text("Highscore:", width - margin, infoY - 20);
-  textSize(12);
+  textSize(textScale * 1.3);
   text(
     diff.highscore === Infinity ? "inf" : nf(diff.highscore, 0, 2) + " S",
     width - margin,
@@ -244,10 +252,11 @@ function drawMinesLeft() {
 
   textFont(font);
   fill(theme.text);
-  textSize(8);
-  text("Mines:", width / 2 - size, infoY - 20);
-  textSize(12);
-  text(count, width / 2 - size, infoY);
+  textAlign(CENTER);
+  textSize(textScale);
+  text("Mines:", width / 2, infoY - 20);
+  textSize(textScale * 1.3);
+  text(count, width / 2, infoY);
 
   pop();
 }
@@ -350,15 +359,17 @@ function cellsRevealed() {
 }
 
 function mousePressed() {
-  if (!firstClicked) {
-    timer = millis();
-    firstClicked = true;
-  }
+
 
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       if (!lost && !won && !textShown) {
         if (board[i][j].collision()) {
+          if (!firstClicked) {
+            timer = millis();
+            firstClicked = true;
+          }
+
           if (mouseButton == LEFT && !board[i][j].isRevealed) {
             if (board[i][j].isBomb) {
               lost = true;
