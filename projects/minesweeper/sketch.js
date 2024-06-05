@@ -4,9 +4,11 @@
 // '3' - HARD
 
 // CONTROLS
-// LEFT CLICK   - REVEAL CELL / REVEAL NEIGHBORS IF FLAGS PLACED
-// RIGHT CLICK  - PLACE FLAG
-// 'R' - RESET
+// RIGHT CLICK   - PLACE FLAG
+// LEFT CLICK    - REVEAL CELL
+// LEFT CLICK    - REVEAL NEIGHBORS IF FLAGS PLACED
+// LEFT CLICK    - RESTART (ON GAME OVER)
+// 'R'           - RESTART
 
 // THEMES
 // 'L' - LIGHT
@@ -15,7 +17,7 @@
 let board;
 let mines, cols, rows, size;
 let font;
-let lost;
+let won, lost;
 let bombs;
 let banner = 100;
 let margin = 20;
@@ -24,7 +26,8 @@ let textShown;
 let alph = 150;
 let increasing = false;
 
-let timer, prevTimer, infoY;
+let timer, prevTimer, infoY, time;
+let firstClicked;
 
 class Difficulty {
   constructor(mines, cols, rows) {
@@ -50,8 +53,8 @@ let lt, dt, theme;
 let difficulties = {
   easy: new Difficulty(10, 10, 10),
   medium: new Difficulty(40, 16, 16),
-  hard: new Difficulty(99, 30, 16)
-}
+  hard: new Difficulty(99, 30, 16),
+};
 
 let diff = difficulties.easy;
 
@@ -65,8 +68,8 @@ function setup() {
     color(160, 160, 180),
     color(210, 210, 230),
     color(100, 100, 120),
-    color(50, 50, 70),
-  )
+    color(50, 50, 70)
+  );
 
   dt = new Theme(
     color(0, 0, 0),
@@ -74,7 +77,7 @@ function setup() {
     color(70, 70, 70),
     color(50, 50, 50),
     color(150, 150, 150)
-  )
+  );
 
   theme = lt;
 
@@ -99,7 +102,7 @@ function draw() {
   }
 
   push();
-  noFill()
+  noFill();
   stroke(theme.strk);
   strokeWeight(5);
   rect(margin, banner, width - 2 * margin, height - margin - banner);
@@ -113,7 +116,6 @@ function draw() {
 
 function initGame(difficulty = diff) {
   prevTimer = timer;
-  timer = millis();
 
   diff = difficulty;
   mines = diff.mines;
@@ -123,7 +125,10 @@ function initGame(difficulty = diff) {
   board = [];
   bombs = [];
   lost = false;
+  won = false;
   increasing = false;
+  textShown = false;
+  firstClicked = false;
 
   for (let i = 0; i < cols; i++) {
     board[i] = [];
@@ -198,7 +203,11 @@ function drawTimer() {
   textSize(8);
   text("Time:", margin, infoY - 20);
   textSize(12);
-  text(nf((millis() - timer) / 1000, 0, 2) + " S", margin, infoY);
+  if (!lost && !won) {
+    time = millis();
+  }
+
+  text(firstClicked ? nf((time - timer) / 1000, 0, 2) : 0 + " S", margin, infoY);
 
   pop();
 }
@@ -206,12 +215,16 @@ function drawTimer() {
 function drawHighScore() {
   push();
   textFont(font);
-  textAlign(RIGHT)
+  textAlign(RIGHT);
   fill(theme.text);
   textSize(8);
   text("Highscore:", width - margin, infoY - 20);
   textSize(12);
-  text(diff.highscore === Infinity ? "inf" : nf(diff.highscore, 0, 2) + " S", width - margin, infoY);
+  text(
+    diff.highscore === Infinity ? "inf" : nf(diff.highscore, 0, 2) + " S",
+    width - margin,
+    infoY
+  );
 
   pop();
 }
@@ -240,19 +253,31 @@ function drawMinesLeft() {
 }
 
 function gameState() {
-  if (cellsRevealed()) {
-    let endTime = millis();
-    let score = (endTime - timer) / 1000;
+  won = cellsRevealed();
+
+  if (won) {
+    let score = (time - timer) / 1000;
     if (score < diff.highscore) {
       diff.highscore = score;
     }
+
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        if (board[i][j].isBomb) {
+          board[i][j].isFlagged = true;
+        }
+      }
+    }
+
     showText("YOU\nWON");
+    textShown = true;
   } else if (lost) {
     for (cell of bombs) {
       cell.isRevealed = true;
     }
 
     showText("YOU\nLOST");
+    textShown = true;
   }
 }
 
@@ -266,24 +291,24 @@ function showText(s) {
   textAlign(CENTER, CENTER);
 
   let textY = height / 2;
-  textSize(40)
+  textSize(40);
   text(s, width / 2, textY);
 
-  if (!increasing && alph <= 0 + 10) {  // Using a proximity threshold
+  if (!increasing && alph <= 0 + 10) {
     increasing = true;
   } else if (increasing && alph >= 255 - 10) {
     increasing = false;
   }
 
   if (increasing) {
-    alph = lerp(alph, 255, 0.05);  // Increase alpha towards 255
+    alph = lerp(alph, 255, 0.05);
   } else {
-    alph = lerp(alph, 0, 0.05);  // Decrease alpha towards 0
+    alph = lerp(alph, 0, 0.05);
   }
   fill(255, 0, 100, alph);
 
   textSize(10);
-  text("press 'R' to play again", width / 2, textY + 75);
+  text("Click or 'R' to play again", width / 2, textY + 75);
   pop();
 }
 
@@ -312,7 +337,6 @@ function revealAll() {
 }
 
 function cellsRevealed() {
-
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       if (!board[i][j].isBomb) {
@@ -326,9 +350,14 @@ function cellsRevealed() {
 }
 
 function mousePressed() {
+  if (!firstClicked) {
+    timer = millis();
+    firstClicked = true;
+  }
+
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
-      if (!lost) {
+      if (!lost && !won && !textShown) {
         if (board[i][j].collision()) {
           if (mouseButton == LEFT && !board[i][j].isRevealed) {
             if (board[i][j].isBomb) {
@@ -337,7 +366,6 @@ function mousePressed() {
             board[i][j].isRevealed = true;
           } else if (mouseButton == LEFT && board[i][j].isRevealed) {
             board[i][j].revealNeighbors();
-
           } else if (mouseButton == RIGHT && !board[i][j].isRevealed) {
             board[i][j].isFlagged = !board[i][j].isFlagged;
           }
@@ -345,30 +373,39 @@ function mousePressed() {
       }
     }
   }
+
+  if (textShown) {
+    initGame();
+  }
 }
 
 function keyPressed() {
-  if (keyCode == 82) { // R
+  if (keyCode == 82) {
+    // R
     initGame();
   }
-  if (keyCode == 49) { // 1
+  if (keyCode == 49) {
+    // 1
     initGame(difficulties.easy);
   }
-  if (keyCode == 50) { // 2
+  if (keyCode == 50) {
+    // 2
     initGame(difficulties.medium);
   }
-  if (keyCode == 51) { // 3
+  if (keyCode == 51) {
+    // 3
     initGame(difficulties.hard);
   }
-  if (keyCode == 76) { // L
+  if (keyCode == 76) {
+    // L
     theme = lt;
   }
-  if (keyCode == 68) { // D
+  if (keyCode == 68) {
+    // D
     theme = dt;
   }
 }
 
 document.oncontextmenu = function () {
-  if (mouseX < width && mouseY < height)
-    return false;
-}
+  if (mouseX < width && mouseY < height) return false;
+};
