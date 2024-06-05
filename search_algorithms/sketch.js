@@ -77,10 +77,10 @@ function draw() {
       }
     }
   }
+
   if (!pathFound || path.length < minPath) {
     if (!isPaused || doStep) {
       initGrid();
-      doStep = false;
     }
   }
   else {
@@ -214,7 +214,7 @@ function showStats() {
     textElement(y += r, "Steps", fullaux.length);
     textElement(y += 20, "Path Length", pathaux.length);
     textElement(y += 20, "Tiles", ctotal);
-    textElement(y += 20, "Walls", `${wtotal}, ${coverage * 100}%`);
+    textElement(y += 20, "Walls", `${wtotal}, ${floor(coverage * 100)}%`);
     textElement(y += 20, "Visited", cvisited);
     textElement(y += 20, "% explored", `${cpercent}%`);
 
@@ -328,7 +328,7 @@ function showHelp() {
     textElement(y += r, "SPACEBAR", "Toggle pause search", null, isPaused);
     textElement(y += 20, "N", "Step through search");
     textElement(y += r, "G", "Generate new grid");
-    textElement(y += r, "0 - 8", "0% - 80% wall coverage", null, `${coverage * 100}%`);
+    textElement(y += r, "0 - 8", "0% - 80% wall coverage", null, `${floor(coverage * 100)}%`);
     textElement(y += r, "SHIFT + SCROLL", "Change cell size", null, `${map(size, minSize, maxSize, 1, (maxSize - minSize) / 5 + 1)}`);
     textElement(y += r, "D", "Toggle diagonal path", null, doDiagonal);
     textElement(y += r, "Z", "Toggle show full path", null, showFull);
@@ -421,6 +421,7 @@ function drawPath(arr, aux, color) {
 
   if (aux.length < arr.length) {
     if (!isPaused || doStep) {
+      doStep = false;
       let newIndex = index + drawRate / 10;
       for (let i = floor(index); i < newIndex && i < arr.length; i++) {
         aux[i] = arr[i];
@@ -437,16 +438,16 @@ function drawPath(arr, aux, color) {
 }
 
 function initGrid() {
-  // do {
   index = 0;
   path = [];
   full = [];
   pathaux = [];
   fullaux = [];
-  setColors();
+  pathFound = false;
   minPath = floor((cols + rows) / 8);
 
-  pathFound = false;
+  setColors();
+
   grid = [];
   for (let i = 0; i < cols; i++) {
     grid[i] = [];
@@ -458,8 +459,6 @@ function initGrid() {
   positions[selectedPos].function();
   initWalls();
   initNeighbors();
-  // algorithms[selected](start);
-  // } while (!algorithms[selectedAlg](start) || path.length < 20);
   algorithms[selectedAlg](start);
 }
 
@@ -475,13 +474,14 @@ function posCorners() {
 
 function resetCells() {
   index = 0;
-  setColors();
   path = [];
   full = [];
   pathaux = [];
   fullaux = [];
   pathFound = false;
+  minPath = 0; // stops reset if user places end and start cells too close.
 
+  setColors();
   initNeighbors();
 
   for (let i = 0; i < cols; i++) {
@@ -694,7 +694,6 @@ function mousePressed() {
               if (grid[i][j] !== start) {
                 if (grid[i][j] === end) {
                   end = start;
-                  start = grid[i][j];
                 }
                 start = grid[i][j];
                 resetCells();
@@ -716,7 +715,6 @@ function mousePressed() {
               if (grid[i][j] !== end) {
                 if (grid[i][j] === start) {
                   start = end;
-                  end = grid[i][j];
                 }
                 end = grid[i][j];
                 resetCells();
@@ -809,6 +807,7 @@ function keyPressed() {
     case 54:
     case 55:
     case 56:
+    case 57:
       coverage = (keyCode - 48) * 0.1;
       initGrid();
       break;
