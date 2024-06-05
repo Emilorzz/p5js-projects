@@ -5,3 +5,10 @@ body {
     height: 100%;
     width: 100%;
 }
+
+#index {
+    top: 30%;
+    left: 48%;
+    position: relative;
+    text-align: left;
+}
