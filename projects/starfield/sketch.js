@@ -54,7 +54,7 @@ function draw() {
     circle(x, y, d);
 
     if (mouseIsPressed) {
-      // spd = constrain(map(mouseX, 0, width, minSpd, maxSpd), minSpd, maxSpd);
+      spd = constrain(map(mouseX, 0, width, minSpd, maxSpd), minSpd, maxSpd);
       sat = map(mouseY, 0, height, 100, 0);
     }
 
