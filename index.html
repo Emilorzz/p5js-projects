@@ -1,29 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>P5.js Projects</title>
+    <title>P5.js Projects</title>
 
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-    <body>
-        <div id="contentWrapper">
-            <div id="index">
-                <ol>                
-                    <li><a class="navigation" href="projects/search_algorithms/index.html">Search Algorithm</a></li>
-                    <li><a class="navigation" href="projects/starfield/index.html">Starfield</a></li>
-                    <li><a class="navigation" href="projects/minesweeper/index.html">Minesweeper</a></li>
-                    <li><a class="navigation" href="projects/gameOfLife/index.html">Game Of Life</a></li>
-                </ol>
-            </div>
-            <h1 id="hTitle">p5.js projects</h1>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="contentWrapper">
+      <div id="index">
+        <ol>
+          <li>
+            <a class="navigation" href="projects/search_algorithms/index.html">Search Algorithm</a>
+          </li>
+          <li>
+            <a class="navigation" href="projects/starfield/index.html">Starfield</a>
+          </li>
+          <li>
+            <a class="navigation" href="projects/minesweeper/index.html">Minesweeper</a>
+          </li>
+          <li>
+            <a class="navigation" href="projects/gameOfLife/index.html">Game Of Life</a>
+          </li>
+          <li>
+            <a class="navigation" href="projects/clicker/index.html">Clicker</a>
+          </li>
+        </ol>
+      </div>
+      <h1 id="hTitle">p5.js projects</h1>
+      <script>
+        var title = document.querySelector("#hTitle");
+        var listDiv = document.querySelector("ol");
 
-        </div>
+        listDiv.addEventListener("mouseover", function () {
+          title.style.textTransform = "uppercase";
+        });
+        listDiv.addEventListener("mouseleave", function () {
+          title.style.textTransform = "lowercase";
+        });
+      </script>
+    </div>
 
-        <p id="secret">nothing here, go away</p>
-        <!-- <iframe src="projects/search_algorithms/index.html"
+    <p id="secret">nothing here, go away</p>
+    <!-- <iframe src="projects/search_algorithms/index.html"
             style="height: 49%; width:49.5%"
             name="iframe_a"
             title="Iframe Example"></iframe>
@@ -39,5 +60,5 @@
             style="height: 49%; width:49.5%"
             name="iframe_a"
             title="Iframe Example"></iframe> -->
-    </body>
+  </body>
 </html>
