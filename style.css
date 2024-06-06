@@ -4,11 +4,64 @@ body {
     padding: 0;
     height: 100%;
     width: 100%;
+    background-color: black;
+}
+
+#contentWrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #index {
-    top: 30%;
-    left: 48%;
+    bottom: 7.5em;
     position: relative;
+    display: inline-block;
     text-align: left;
+    font-size: 15pt;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+a {
+    text-decoration: none;
+    text-transform: lowercase;
+    color: rgb(0, 140, 140);
+}
+
+a:hover {
+    font-weight: bold;
+    color: gold;
+    text-transform: uppercase;
+}
+
+.navigation:hover+#hTitle,
+.navigation:focus+#hTitle {
+    color: red;
+    /* Change this to the desired color */
+}
+
+#secret {
+    position: absolute;
+    right: -100%;
+    bottom: 10%;
+    padding-right: 100px;
+}
+
+li {
+    margin: 5px 0;
+}
+
+li:hover {
+    list-style-type: none;
+}
+
+ol:hover>li {
+    color: rgb(255, 101, 148);
+
+}
+
+#hTitle {
+    position: absolute;
+    font-family: 'Courier New', Courier, monospace;
 }
