@@ -1,29 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="This repository holds all my pastime p5js projects, and documents the learning i get from them." />
 
-        <title>P5.js Projects</title>
+    <title>P5.js Projects</title>
 
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-    <body>
-        <div id="contentWrapper">
-            <div id="index">
-                <ol>                
-                    <li><a class="navigation" href="projects/search_algorithms/index.html">Search Algorithm</a></li>
-                    <li><a class="navigation" href="projects/starfield/index.html">Starfield</a></li>
-                    <li><a class="navigation" href="projects/minesweeper/index.html">Minesweeper</a></li>
-                    <li><a class="navigation" href="projects/gameOfLife/index.html">Game Of Life</a></li>
-                </ol>
-            </div>
-            <h1 id="hTitle">p5.js projects</h1>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="contentWrapper">
+      <h1 id="hTitle">p5.js projects</h1>
 
-        </div>
+      <div id="index">
+        <ol>
+          <li>
+            <a class="navigation" href="projects/search_algorithms/index.html">Search Algorithm</a>
+          </li>
+          <li>
+            <a class="navigation" href="projects/starfield/index.html">Starfield</a>
+          </li>
+          <li>
+            <a class="navigation" href="projects/minesweeper/index.html">Minesweeper</a>
+          </li>
+          <li>
+            <a class="navigation" href="projects/gameOfLife/index.html">Game Of Life</a>
+          </li>
+          <li>
+            <a class="navigation" href="projects/clicker/index.html">Clicker</a>
+          </li>
+        </ol>
+      </div>
 
-        <p id="secret">nothing here, go away</p>
-        <!-- <iframe src="projects/search_algorithms/index.html"
+      <script>
+        var title = document.querySelector("#hTitle");
+        var listElems = document.querySelectorAll("li");
+
+        var titleValue = title.innerText;
+
+        listElems.forEach(function (element) {
+          element.addEventListener("mouseover", function () {
+            title.innerText = element.innerText;
+            title.style.fontWeight = "bold";
+            title.style.textTransform = "uppercase";
+            title.style.color = "gold";
+          });
+          element.addEventListener("mouseleave", function () {
+            title.innerText = titleValue;
+            title.style.fontWeight = "normal";
+            title.style.textTransform = "lowercase";
+            title.style.color = "white";
+          });
+        });
+      </script>
+    </div>
+    <div lang="en" class="tooltip">
+      disclaimer
+      <span class="tooltiptext">
+        Please note that the projects showcased on this website vary in quality and scale. They were created as small,
+        fun pastimes and are not intended to represent professional work. Enjoy exploring them!
+      </span>
+    </div>
+
+    <p id="secret">nothing here, go away</p>
+    <!-- <iframe src="projects/search_algorithms/index.html"
             style="height: 49%; width:49.5%"
             name="iframe_a"
             title="Iframe Example"></iframe>
@@ -39,5 +82,5 @@
             style="height: 49%; width:49.5%"
             name="iframe_a"
             title="Iframe Example"></iframe> -->
-    </body>
+  </body>
 </html>

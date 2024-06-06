@@ -1,67 +1,103 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    background-color: black;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
 }
 
 #contentWrapper {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #index {
-    bottom: 7.5em;
-    position: relative;
-    display: inline-block;
-    text-align: left;
-    font-size: 15pt;
-    font-family: 'Courier New', Courier, monospace;
+  bottom: 7.5em;
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  font-size: 15pt;
+  font-family: "Courier New", Courier, monospace;
 }
 
 a {
-    text-decoration: none;
-    text-transform: lowercase;
-    color: rgb(0, 140, 140);
+  text-decoration: none;
+  text-transform: lowercase;
+  color: rgb(0, 140, 140);
 }
 
-a:hover {
-    font-weight: bold;
-    color: gold;
-    text-transform: uppercase;
-}
+/* a:hover {
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
+} */
 
-.navigation:hover+#hTitle,
-.navigation:focus+#hTitle {
-    color: red;
-    /* Change this to the desired color */
+.navigation:hover + #hTitle,
+.navigation:focus + #hTitle {
+  color: red;
+  /* Change this to the desired color */
 }
 
 #secret {
-    position: absolute;
-    right: -100%;
-    bottom: 10%;
-    padding-right: 100px;
+  position: absolute;
+  right: -100%;
+  bottom: 10%;
+  padding-right: 100px;
 }
 
 li {
-    margin: 5px 0;
+  padding: 3px 0;
 }
 
 li:hover {
-    list-style-type: none;
+  opacity: 0;
+  list-style-type: none;
 }
 
-ol:hover>li {
-    color: rgb(255, 101, 148);
-
+ol:hover > li {
+  color: gold;
 }
 
 #hTitle {
-    position: absolute;
-    font-family: 'Courier New', Courier, monospace;
+  position: absolute;
+  font-weight: normal;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.tooltip {
+  position: absolute;
+  display: inline-block;
+  bottom: 1em;
+  left: 2em;
+
+  font-family: "Courier New", Courier, monospace;
+}
+
+.tooltip .tooltiptext {
+  bottom: 2em;
+  left: 0em;
+  visibility: hidden;
+  color: #fff;
+  font-weight: 100;
+  padding: 5px 0;
+  border-radius: 6px;
+  inline-size: 19em;
+  display: inline-block;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover {
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
+}
+
+.tooltip:hover .tooltiptext {
+  text-transform: initial;
+  visibility: visible;
 }
