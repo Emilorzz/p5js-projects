@@ -10,6 +10,20 @@ canvas {
 
 #homeBtn {
   position: absolute;
-  top: 1%;
-  left: 1%;
+  top: 1em;
+  left: 2em;
+}
+
+a {
+  text-decoration: none;
+  font-size: 15pt;
+  font-family: 'Courier New', Courier, monospace;
+  text-transform: lowercase;
+  color: darkcyan;
+}
+
+a:hover {
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
 }
