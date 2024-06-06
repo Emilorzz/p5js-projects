@@ -64,6 +64,8 @@ function preload() {
   font = loadFont("mine-sweeper.ttf");
 }
 
+document.addEventListener('touchstart', {});
+
 function setup() {
   lt = new Theme(
     color(200, 200, 220),

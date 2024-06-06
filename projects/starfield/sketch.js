@@ -11,6 +11,8 @@ let factor;
 let ranges = { h: 360, s: 100, b: { l: 70, r: 100 } };
 let sat = 0;
 
+document.addEventListener('touchstart', {});
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();

@@ -33,6 +33,8 @@ let index, w, r, c, h = 0;
 let isPaused, doStep, doHelp, doStats, pathFound, showFull, showPath, doAnimation, doReplay, doDiagonal, doMenu;
 let pausedFrame, blinkFps;
 
+document.addEventListener('touchstart', {});
+
 function setup() {
   textFont('Courier New');
   textStyle(BOLD)
