@@ -1,93 +1,93 @@
 class Snake {
-    constructor(dir) {
-        this.head = new Node(0, 0);
-        this.tail = this.head;
-        this.dir = dir;
-        this.s = 20;
-        this.l = 2;
-        this.alive = true;
+  constructor(dir) {
+    this.head = new Node(0, 0);
+    this.tail = this.head;
+    this.dir = dir;
+    this.s = 20;
+    this.l = 2;
+    this.alive = true;
+  }
+
+  update() {
+    if (!this.alive) return;
+
+    changed = false;
+
+    let newX = (this.head.x + this.dir.x * this.s) % width;
+    let newY = (this.head.y + this.dir.y * this.s) % height;
+
+    if (newX >= width) newX = 0;
+    if (newX < 0) newX = width;
+    if (newY >= height) newY = 0;
+    if (newY < 0) newY = height;
+
+    let curr = this.head;
+    while (curr) {
+      if (curr.x === newX && curr.y === newY) {
+        this.alive = false;
+        started = false;
+        blinkTimer = 0;
+        return;
+      }
+
+      curr = curr.next;
     }
 
-    update() {
-        if (!this.alive) return;
+    let newHead = new Node(newX, newY);
+    newHead.next = this.head;
+    this.head = newHead;
 
-        changed = false;
+    if (this.l < this.getLength()) {
+      this.removeTail();
+    }
+  }
 
-        let newX = this.head.x + this.dir.x * this.s;
-        let newY = this.head.y + this.dir.y * this.s;
+  getLength() {
+    let count = 0;
+    let curr = this.head;
 
-        if (newX >= width) newX = 0;
-        if (newX < 0) newX = width;
-        if (newY >= height) newY = 0;
-        if (newY < 0) newY = height;
-
-        let curr = this.head;
-        while (curr) {
-            if (curr.x === newX && curr.y === newY) {
-                this.alive = false;
-                started = false;
-                blinkTimer = 0;
-                return;
-            }
-
-            curr = curr.next;
-        }
-
-        let newHead = new Node(newX, newY);
-        newHead.next = this.head;
-        this.head = newHead;
-        
-        if (this.l < this.getLength()) {
-            this.removeTail();
-        }
+    while (curr) {
+      count++;
+      curr = curr.next;
     }
 
-    getLength() {
-        let count = 0;
-        let curr = this.head;
+    return count;
+  }
 
-        while (curr) {
-            count++;
-            curr = curr.next;
-        }
+  removeTail() {
+    let curr = this.head;
 
-        return count;
+    while (curr.next && curr.next.next) {
+      curr = curr.next;
     }
 
-    removeTail() {
-        let curr = this.head;
+    curr.next = null;
+  }
 
-        while (curr.next && curr.next.next) {
-            curr = curr.next;
-        }
+  collision() {
+    let curr = this.head.next;
 
-        curr.next = null;
+    while (curr.next) {
+      if (this.head.x == curr.x && this.head.y == curr.y) {
+        this.alive = false;
+        initGame();
+      }
     }
+  }
 
-    collision() {
-        let curr = this.head.next;
+  show() {
+    stroke(currTheme.snake);
+    strokeCap(PROJECT);
+    strokeWeight(this.s * 0.75);
+    noFill();
 
-        while (curr.next) {
-            if (this.head.x == curr.x && this.head.y == curr.y) {
-                this.alive = false;
-                initGame();
-            }
-        }
+    let curr = this.head;
+    while (curr && curr.next) {
+      if (dist(curr.x, curr.y, curr.next.x, curr.next.y) < this.s * 2) {
+        line(curr.x + this.s / 2, curr.y + this.s / 2, curr.next.x + this.s / 2, curr.next.y + this.s / 2);
+      }
+
+      curr = curr.next;
     }
-
-    show() {
-        stroke(currTheme.snake);
-        strokeCap(PROJECT)
-        strokeWeight(this.s * 0.75);
-        noFill();
-        
-        let curr = this.head;
-        while (curr && curr.next) {
-            if (dist(curr.x, curr.y, curr.next.x, curr.next.y) < this.s * 2) {
-                line(curr.x + this.s / 2, curr.y + this.s / 2, curr.next.x + this.s / 2, curr.next.y + this.s / 2);
-            }
-
-            curr = curr.next;
-        }
-    }
+  }
 }
