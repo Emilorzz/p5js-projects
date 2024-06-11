@@ -4,7 +4,7 @@ class Snake {
     this.tail = this.head;
     this.dir = dir;
     this.s = 20;
-    this.l = 20;
+    this.l = 2;
     this.alive = true;
   }
 
