@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -11,12 +12,16 @@ canvas {
   position: absolute;
   top: 1em;
   left: 2em;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 a {
   text-decoration: none;
   font-size: 15pt;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   text-transform: lowercase;
   color: darkcyan;
 }
