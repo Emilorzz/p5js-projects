@@ -4,7 +4,7 @@ class Snake {
     this.tail = this.head;
     this.dir = dir;
     this.s = 20;
-    this.l = 2;
+    this.l = 20;
     this.alive = true;
   }
 
@@ -13,13 +13,8 @@ class Snake {
 
     changed = false;
 
-    let newX = (this.head.x + this.dir.x * this.s) % width;
-    let newY = (this.head.y + this.dir.y * this.s) % height;
-
-    if (newX >= width) newX = 0;
-    if (newX < 0) newX = width;
-    if (newY >= height) newY = 0;
-    if (newY < 0) newY = height;
+    let newX = (this.head.x + this.dir.x * this.s + width) % width;
+    let newY = (this.head.y + this.dir.y * this.s + height) % height;
 
     let curr = this.head;
     while (curr) {
