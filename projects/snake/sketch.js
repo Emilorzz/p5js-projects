@@ -1,10 +1,10 @@
-let started,
+let started = true,
   changed = false;
 let highscore = 0;
 let snake, fruit;
 let dirs;
 
-let lightTheme, darkTheme, currTheme;
+let themes, lightTheme, darkTheme, currTheme;
 let font;
 let blinkTimer;
 
@@ -25,7 +25,6 @@ function setup() {
   };
 
   loadThemes();
-  currTheme = lightTheme;
 
   initGame();
 }
@@ -50,23 +49,44 @@ function draw() {
 }
 
 function loadThemes() {
-  lightTheme = {
-    bg: color(220),
-    text: color(0),
-    fruit: color(200, 0, 50),
-    snake: color(0, 150, 0),
+  themes = {
+    lightTheme: {
+      bg: color(220),
+      text: color(0),
+      fruit: color(200, 0, 50),
+      snake: color(0, 150, 0),
+    },
+    darkTheme: {
+      bg: color(0),
+      text: color(220),
+      fruit: color(255, 0, 50),
+      snake: color(255, 255, 0),
+    },
+    purpleTheme: {
+      bg: color(50, 0, 50),
+      text: color(220),
+      fruit: color(255, 255, 0),
+      snake: color(255, 0, 255),
+    },
+    greenTheme: {
+      bg: color(0, 120, 70),
+      text: color(220),
+      fruit: color(200, 30, 30),
+      snake: color(0, 255, 100),
+    },
   };
 
-  darkTheme = {
-    bg: color(0),
-    text: color(220),
-    fruit: color(255, 0, 50),
-    snake: color(0, 200, 50),
-  };
+  currTheme = themes.greenTheme;
 }
 
-function toggleDarkMode() {
-  currTheme = currTheme == lightTheme ? darkTheme : lightTheme;
+function shuffleTheme() {
+  let keys = Object.keys(themes);
+  let newTheme;
+  do {
+    newTheme = random(keys);
+  } while (themes[newTheme] === currTheme);
+
+  currTheme = themes[newTheme];
 }
 
 function updateScore() {
@@ -125,7 +145,7 @@ function drawFruit() {
   if (dist(snake.head.x, snake.head.y, fruit.x, fruit.y) < snake.s) {
     snake.l++;
     newFruit();
-    toggleDarkMode();
+    shuffleTheme();
   }
 
   pop();
@@ -151,7 +171,7 @@ function keyPressed() {
 
   switch (keyCode) {
     case 32: // spacebar
-      toggleDarkMode();
+      shuffleTheme();
       break;
     // movement
     case 87: // w
