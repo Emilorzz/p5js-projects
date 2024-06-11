@@ -26,6 +26,7 @@ class Snake {
             if (curr.x === newX && curr.y === newY) {
                 this.alive = false;
                 started = false;
+                blinkTimer = 0;
                 return;
             }
 
@@ -75,7 +76,7 @@ class Snake {
     }
 
     show() {
-        stroke("green");
+        stroke(currTheme.snake);
         strokeCap(PROJECT)
         strokeWeight(this.s * 0.75);
         noFill();
