@@ -1,4 +1,3 @@
-
 // MOUSE    - DRAW CELLS
 // SCROLL   - INCREASE / DECREASE SIMULATION
 // SPACEBAR - PAUSE / UNPAUSE SIMULATION
@@ -76,7 +75,7 @@ function onGrid(x, y) {
 
 function drawStatus() {
   push();
-  fill(50, 0, 200)
+  fill(50, 0, 200);
 
   if (frameCount % 30 == 0) show = !show;
 
@@ -88,7 +87,6 @@ function drawStatus() {
       triangle(25, 25, 25, 75, 75, 50);
     }
   }
-
 
   pop();
 }
@@ -103,7 +101,7 @@ function drawGrid() {
 
 function drawLines() {
   push();
-  strokeWeight(size / 10)
+  strokeWeight(size / 10);
   stroke(50);
   for (let i = 0; i <= width; i += size) {
     line(0, i, width, i);
@@ -190,4 +188,9 @@ function mouseWheel(event) {
   }
 
   freq = constrain(freq, 1, 60);
+}
+
+function doubleClicked() {
+  paused = !paused;
+  show = true;
 }
