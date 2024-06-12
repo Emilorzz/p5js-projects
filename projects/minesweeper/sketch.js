@@ -53,9 +53,9 @@ class Theme {
 let lt, dt, theme;
 
 let difficulties = {
-  easy: new Difficulty(10, 10, 10, 34),
-  medium: new Difficulty(40, 16, 16, 21.2),
-  hard: new Difficulty(99, 30, 16, 21.2),
+  easy: new Difficulty(10, 10, 10, 30),
+  medium: new Difficulty(40, 16, 16, 30),
+  hard: new Difficulty(99, 30, 16, 30),
 };
 
 let diff = difficulties.easy;
@@ -64,7 +64,7 @@ function preload() {
   font = loadFont("mine-sweeper.ttf");
 }
 
-document.addEventListener('touchstart', {});
+document.addEventListener("touchstart", {});
 
 function setup() {
   lt = new Theme(
@@ -75,13 +75,7 @@ function setup() {
     color(50, 50, 70)
   );
 
-  dt = new Theme(
-    color(0, 0, 0),
-    color(10, 10, 10),
-    color(70, 70, 70),
-    color(50, 50, 50),
-    color(150, 150, 150)
-  );
+  dt = new Theme(color(0, 0, 0), color(10, 10, 10), color(70, 70, 70), color(50, 50, 50), color(150, 150, 150));
 
   theme = lt;
 
@@ -150,7 +144,7 @@ function initGame(difficulty = diff) {
   let h = rows * size + banner + margin;
   resizeCanvas(w, h);
 
-  textScale = height * 0.02;
+  textScale = size * 0.3;
 }
 
 function initBombs() {
@@ -231,11 +225,7 @@ function drawHighScore() {
   textSize(textScale);
   text("Highscore:", width - margin, infoY - 20);
   textSize(textScale * 1.3);
-  text(
-    diff.highscore === Infinity ? "inf" : nf(diff.highscore, 0, 2) + " S",
-    width - margin,
-    infoY
-  );
+  text(diff.highscore === Infinity ? "inf" : nf(diff.highscore, 0, 2) + " S", width - margin, infoY);
 
   pop();
 }
@@ -362,8 +352,6 @@ function cellsRevealed() {
 }
 
 function mousePressed() {
-
-
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
       if (!lost && !won && !textShown) {
