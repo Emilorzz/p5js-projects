@@ -52,6 +52,8 @@ class Theme {
 
 let lt, dt, theme;
 
+let easyButton, mediumButton, hardButton;
+
 let difficulties = {
   easy: new Difficulty(10, 10, 10, 30),
   medium: new Difficulty(40, 16, 16, 30),
@@ -86,7 +88,10 @@ function setup() {
   rows = diff.rows;
   size = 21;
 
-  createCanvas(cols * size + 2 * margin, rows * size + banner + margin);
+  let canvas = createCanvas(cols * size + 2 * margin, rows * size + banner + margin);
+  canvas.parent("container");
+
+  initButtons();
 
   initGame();
 }
@@ -103,7 +108,7 @@ function draw() {
   noFill();
   stroke(theme.strk);
   strokeWeight(5);
-  rect(margin, banner, width - 2 * margin, height - margin - banner);
+  rect(margin, banner, width - 2 * margin, height - margin - banner, 1);
 
   pop();
 
@@ -111,6 +116,29 @@ function draw() {
   drawHighScore();
   drawMinesLeft();
   gameState();
+}
+
+function initButtons() {
+  easyButton = createButton("Easy");
+  easyButton.id("easy");
+  easyButton.parent("container");
+  easyButton.mouseReleased(function () {
+    if (mouseButton === LEFT) initGame(difficulties.easy);
+  });
+
+  mediumButton = createButton("Medium");
+  mediumButton.id("medium");
+  mediumButton.parent("container");
+  mediumButton.mouseReleased(function () {
+    if (mouseButton === LEFT) initGame(difficulties.medium);
+  });
+
+  hardButton = createButton("Hard");
+  hardButton.id("hard");
+  hardButton.parent("container");
+  hardButton.mouseReleased(function () {
+    if (mouseButton === LEFT) initGame(difficulties.hard);
+  });
 }
 
 function initGame(difficulty = diff) {
@@ -142,7 +170,11 @@ function initGame(difficulty = diff) {
 
   let w = cols * size + 2 * margin;
   let h = rows * size + banner + margin;
-  resizeCanvas(w, h);
+  canvas = resizeCanvas(w, h);
+
+  easyButton.position(width / 2 - 105 - easyButton.width / 2, 13);
+  mediumButton.position(width / 2 - easyButton.width / 2, 13);
+  hardButton.position(width / 2 + 105 - easyButton.width / 2, 13);
 
   textScale = size * 0.3;
 }
@@ -287,7 +319,7 @@ function showText(s) {
   push();
   noStroke();
   fill(0, 200);
-  rect(-10, -10, width + 2 * margin, height + banner + margin);
+  rect(margin, banner, width - 2 * margin, height - banner - margin);
   textFont(font);
   fill(255);
   textAlign(CENTER, CENTER);
