@@ -31,3 +31,39 @@ a:hover {
   color: gold;
   text-transform: uppercase;
 }
+
+.tooltip {
+  position: absolute;
+  display: inline-block;
+  bottom: 2em;
+  left: 2em;
+  color: darkcyan;
+
+  font-family: "Courier New", Courier, monospace;
+}
+
+.tooltip .tooltiptext {
+  bottom: 2em;
+  left: 0em;
+  visibility: hidden;
+  color: #fff;
+  font-weight: 100;
+  padding: 5px 0;
+  border-radius: 6px;
+  inline-size: 19em;
+  display: inline-block;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover {
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
+}
+
+.tooltip:hover .tooltiptext {
+  text-transform: initial;
+  visibility: visible;
+}
