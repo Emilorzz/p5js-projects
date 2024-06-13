@@ -1,4 +1,4 @@
-let started = true,
+let started = false,
   changed = false;
 let highscore = 0;
 let snake, fruit;
