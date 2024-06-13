@@ -12,6 +12,7 @@ let ranges = { h: 360, s: 100, b: { l: 70, r: 100 } };
 let sat = 0;
 let scale = 50;
 let intensity = 0.3;
+let angle, angleStep;
 
 document.addEventListener("touchstart", {});
 
@@ -19,13 +20,16 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
   colorMode(HSB);
+  angleMode(DEGREES);
+  angle = 0;
+  angleStep = 0.1;
 
   factor = width * 0.1;
 
   for (let i = 0; i < 2000; i++) {
     stars[i] = createVector(
       random(-width * scale, width * scale) * factor,
-      random(-height * scale, height * scale) * factor,
+      random(-width * scale, width * scale) * factor,
       random(10, width * scale)
     );
     stars[i].d = random(size * 0.1, size * 0.5);
@@ -40,6 +44,8 @@ function setup() {
 function draw() {
   background(0);
   translate(width / 2, height / 2);
+  rotate(angle);
+  angle = (angle + angleStep) % 360;
 
   for (let star of stars) {
     let divisor = star.z * intensity;
@@ -72,7 +78,7 @@ function draw() {
 
     if (star.z < 1) {
       star.x = random(-width * scale, width * scale) * factor;
-      star.y = random(-height * scale, height * scale) * factor;
+      star.y = random(-width * scale, width * scale) * factor;
       let newZ = width * scale;
       star.z = newZ;
       star.pz = newZ;
