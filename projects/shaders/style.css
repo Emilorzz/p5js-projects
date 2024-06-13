@@ -1,0 +1,69 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+#homeBtn {
+  position: absolute;
+  top: 1em;
+  left: 2em;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+a {
+  text-decoration: none;
+  font-size: 15pt;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: lowercase;
+  color: darkcyan;
+}
+
+a:hover {
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
+}
+
+.tooltip {
+  position: absolute;
+  display: inline-block;
+  bottom: 2em;
+  left: 2em;
+  color: darkcyan;
+
+  font-family: "Courier New", Courier, monospace;
+}
+
+.tooltip .tooltiptext {
+  bottom: 2em;
+  left: 0em;
+  visibility: hidden;
+  color: #fff;
+  font-weight: 100;
+  padding: 5px 0;
+  border-radius: 6px;
+  inline-size: 19em;
+  display: inline-block;
+
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover {
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
+}
+
+.tooltip:hover .tooltiptext {
+  text-transform: initial;
+  visibility: visible;
+}
