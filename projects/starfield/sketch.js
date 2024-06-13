@@ -2,7 +2,7 @@
 // use scroll wheel to increase/decrease speed
 
 let stars = [];
-let minSpd = 100;
+let minSpd = 50;
 let maxSpd = 1000;
 let spd = minSpd;
 let scrollStep = 5;
@@ -22,7 +22,7 @@ function setup() {
   colorMode(HSB);
   angleMode(DEGREES);
   angle = 0;
-  angleStep = 0.1;
+  angleStep = 0.05;
 
   factor = width * 0.1;
 
@@ -68,7 +68,7 @@ function draw() {
     if (mouseIsPressed) {
       let expX = pow(map(spd, minSpd, maxSpd, 0, 1, true), 5);
 
-      intensity = map(expX, 0, 1, 0.3, 5, true);
+      intensity = map(expX, 0, 1, 0.3, 10, true);
       spd = map(mouseX, 0, width, minSpd, maxSpd, true);
       sat = map(expX, 0, 1, 0, 300);
     }
