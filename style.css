@@ -15,7 +15,10 @@ body {
 }
 
 #index {
+  width: 250pt;
+  height: 15em;
   bottom: 7.5em;
+  left: -5em;
   position: relative;
   display: inline-block;
   text-align: left;
@@ -29,16 +32,10 @@ a {
   color: rgb(0, 140, 140);
 }
 
-/* a:hover {
+a:hover {
   font-weight: bold;
   color: gold;
   text-transform: uppercase;
-} */
-
-.navigation:hover + #hTitle,
-.navigation:focus + #hTitle {
-  color: red;
-  /* Change this to the desired color */
 }
 
 #secret {
@@ -53,8 +50,7 @@ li {
 }
 
 li:hover {
-  opacity: 0;
-  list-style-type: none;
+  color: rgb(255, 0, 179);
 }
 
 ol:hover > li {
@@ -62,7 +58,10 @@ ol:hover > li {
 }
 
 #hTitle {
-  position: absolute;
+  color: white;
+  position: relative;
+  left: 5.5em;
+  bottom: 11em;
   font-weight: normal;
   font-family: "Courier New", Courier, monospace;
 }
@@ -100,4 +99,36 @@ ol:hover > li {
 .tooltip:hover .tooltiptext {
   text-transform: initial;
   visibility: visible;
+}
+
+/* .collapsible {
+
+} */
+
+/* .collapsible:active {
+  background-color: #ccc;
+} */
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+}
+
+.content > ol > li {
+  color: gold;
+  list-style-type: lower-latin;
+}
+
+.collapsible:after {
+  content: "\02795";
+  font-size: 12px;
+  color: white;
+  float: right;
+  margin-right: 5em;
+  margin-top: 2pt;
+}
+
+.active:after {
+  content: "\2796";
 }

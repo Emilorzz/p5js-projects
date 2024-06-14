@@ -18,22 +18,36 @@
       <div id="index">
         <ol>
           <li>
-            <a class="navigation" href="projects/search_algorithms/index.html">Search Algorithm</a>
+            <a href="projects/search_algorithms/index.html">Search Algorithm</a>
           </li>
           <li>
-            <a class="navigation" href="projects/starfield/index.html">Starfield</a>
+            <a href="projects/starfield/index.html">Starfield</a>
           </li>
           <li>
-            <a class="navigation" href="projects/minesweeper/index.html">Minesweeper</a>
+            <a href="projects/minesweeper/index.html">Minesweeper</a>
           </li>
           <li>
-            <a class="navigation" href="projects/gameOfLife/index.html">Game Of Life</a>
+            <!-- <button type="button" class="collapsible">click me</button> -->
+            <a class="collapsible" href="" onclick="event.preventDefault();">cellular automata</a>
+            <div class="content">
+              <ol>
+                <li>
+                  <a href="projects/gameOfLife/index.html">Game Of Life</a>
+                </li>
+                <li>
+                  <a href="projects/gameOfLife/index.html">cave generation</a>
+                </li>
+              </ol>
+            </div>
           </li>
           <li>
-            <a class="navigation" href="projects\clicker\index.html">Clicker</a>
+            <a href="projects\clicker\index.html">Clicker</a>
           </li>
           <li>
-            <a class="navigation" href="projects\snake\index.html">Snake</a>
+            <a href="projects\snake\index.html">Snake</a>
+          </li>
+          <li>
+            <a href="projects\shaders\index.html">Shaders</a>
           </li>
           <li>
             <a class="navigation" href="projects\shaders\index.html">Shaders</a>
@@ -42,25 +56,51 @@
       </div>
 
       <script>
-        var title = document.querySelector("#hTitle");
-        var listElems = document.querySelectorAll("li");
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
 
-        var titleValue = title.innerText;
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+              this.style.textTransform = "lowercase";
+              this.style.color = "rgb(0, 140, 140)";
+              this.style.fontWeight = "normal";
+              content.style.display = "none";
+              this.style.textDecoration = "none";
+            } else {
+              // this.style.textDecoration = "underline";
+              this.style.textTransform = "uppercase";
+              this.style.color = "gold";
+              this.style.fontWeight = "bold";
+              this.style.textDecorationColor = "rgb(0, 200, 200)";
+              this.style.textUnderlineOffset = "0.2em";
+              content.style.display = "block";
+            }
+          });
+        }
 
-        listElems.forEach(function (element) {
-          element.addEventListener("mouseover", function () {
-            title.innerText = element.innerText;
-            title.style.fontWeight = "bold";
-            title.style.textTransform = "uppercase";
-            title.style.color = "gold";
-          });
-          element.addEventListener("mouseleave", function () {
-            title.innerText = titleValue;
-            title.style.fontWeight = "normal";
-            title.style.textTransform = "lowercase";
-            title.style.color = "white";
-          });
-        });
+        // style title to show name of hovered element
+        // var title = document.querySelector("#hTitle");
+        // var listElems = document.querySelectorAll("li");
+
+        // var titleValue = title.innerText;
+
+        // listElems.forEach(function (element) {
+        //   element.addEventListener("mouseover", function () {
+        //     title.innerText = element.innerText;
+        //     title.style.fontWeight = "bold";
+        //     title.style.textTransform = "uppercase";
+        //     title.style.color = "gold";
+        //   });
+        //   element.addEventListener("mouseleave", function () {
+        //     title.innerText = titleValue;
+        //     title.style.fontWeight = "normal";
+        //     title.style.textTransform = "lowercase";
+        //     title.style.color = "white";
+        //   });
+        // });
       </script>
     </div>
     <div lang="en" class="tooltip">
