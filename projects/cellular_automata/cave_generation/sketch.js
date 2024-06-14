@@ -20,12 +20,14 @@ function draw() {
 
   drawGrid();
 
-  if (!step) {
+  if (currIter <= numIter) {
     step = false;
     updateGrid();
     currIter++;
+  } else {
+    noLoop();
   }
-  // print(grid[0][0].neighbors);
+  print(grid[0][0].neighbors);
 }
 
 function initGrid() {
@@ -117,12 +119,15 @@ function mouseWheel(event) {
   } else {
     size++;
   }
+
+  loop();
 }
 
 function mousePressed() {
   translate(mouseX, mouseY);
 
   initGrid();
+  loop();
 }
 
 function keyPressed() {

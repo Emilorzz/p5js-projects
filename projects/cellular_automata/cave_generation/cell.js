@@ -8,24 +8,18 @@ class Cell {
   }
 
   show() {
-    fill(this.isWall ? 20 : 100);
-    stroke(this.isWall ? 0 : 50);
+    fill(this.isWall ? color(40, 20, 40) : color(120, 100, 120));
+    stroke(this.isWall ? color(20, 0, 20) : color(100, 80, 100));
     rect(this.x * size, this.y * size, size);
   }
 
   update() {
-    if (currIter <= numIter) {
-      let wallCount = this.countWallNeighbors(true);
+    let wallCount = this.countWallNeighbors(true);
 
-      this.isWallNext = wallCount >= 5 || this.onEdge() ? true : false;
-    }
+    this.isWallNext = wallCount >= 5 ? true : false;
   }
 
-  onEdge() {
-    return this.x == 0 || this.x == cols - 1 || this.y == 0 || this.y == rows - 1;
-  }
-
-  countWallNeighbors(countSelf = false) {
+  countWallNeighbors(countSelf) {
     let wallCount = 0;
 
     if (countSelf && this.isWall) wallCount++;
@@ -35,6 +29,9 @@ class Cell {
         wallCount++;
       }
     }
+    // adjust for walls outside of canvas. This makes walls much more likely along edges
+    wallCount += 8 - this.neighbors.length;
+
     return wallCount;
   }
 }
