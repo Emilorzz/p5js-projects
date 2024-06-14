@@ -1,3 +1,6 @@
+// This implementation was inspired by the Rogue Basin article:
+// https://www.roguebasin.com/index.php/Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
+
 let size, cols, rows;
 let grid, coverage, numIter, currIter;
 
@@ -7,7 +10,7 @@ function setup() {
   size = 20;
   cols = floor(windowWidth / size);
   rows = floor(windowHeight / size);
-  coverage = 0.5;
+  coverage = 0.48;
   numIter = 10;
 
   createCanvas(cols * size, rows * size);
