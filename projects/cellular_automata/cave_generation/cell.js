@@ -8,10 +8,9 @@ class Cell {
   }
 
   show() {
-    if (this.isWall) {
-      fill(20);
-      rect(this.x * size, this.y * size, size);
-    }
+    fill(this.isWall ? 20 : 100);
+    stroke(this.isWall ? 0 : 50);
+    rect(this.x * size, this.y * size, size);
   }
 
   update() {

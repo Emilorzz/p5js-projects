@@ -8,7 +8,7 @@ function setup() {
   cols = floor(windowWidth / size);
   rows = floor(windowHeight / size);
   coverage = 0.5;
-  numIter = 100;
+  numIter = 10;
 
   createCanvas(cols * size, rows * size);
 
@@ -32,6 +32,9 @@ function initGrid() {
   grid = [];
   currIter = 1;
   step = false;
+
+  cols = floor(windowWidth / size);
+  rows = floor(windowHeight / size);
 
   for (let i = 0; i < cols; i++) {
     grid[i] = [];
