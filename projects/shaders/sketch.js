@@ -1,7 +1,7 @@
 let firstShader;
 
 function preload() {
-  firstShader = loadShader("shader.vert", "shader.frag");
+  firstShader = loadShader("neon.vert", "neon.frag");
 }
 
 function setup() {

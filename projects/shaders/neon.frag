@@ -6,7 +6,6 @@ uniform vec2 u_resolution;
 uniform float u_time;
 // uniform float u_mouse;
 
-
 vec3 palette(float t) {
     vec3 a = vec3(0.509, 0.192, 0.803);
     vec3 b = vec3(0.938, 0.537, 0.100);
@@ -22,7 +21,7 @@ void main() {
 
     vec3 finalColor = vec3(0.0);
 
-    for (float i = 0.0; i < 3.0; i++) {
+    for(float i = 0.0; i < 3.0; i++) {
         uv = fract(uv * 1.75) - 0.5;
 
         float d = pow(0.02 / (abs(sin((length(uv) * exp(-length(uv0))) * 8.0 + u_time * 3.0) / 8.0)), 2.0);
