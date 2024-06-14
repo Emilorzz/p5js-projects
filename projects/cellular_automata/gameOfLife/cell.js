@@ -11,13 +11,16 @@ class Cell {
   update() {
     this.nextState = this.alive;
     if (!this.alive) {
-      if (this.aliveNeighbors() == 3) { // reproduction
+      if (this.aliveNeighbors() == 3) {
+        // reproduction
         this.nextState = true;
       }
     } else {
-      if (this.aliveNeighbors() > 3) { // overpopulation
+      if (this.aliveNeighbors() > 3) {
+        // overpopulation
         this.nextState = false;
-      } else if (this.aliveNeighbors() < 2) { // underpopulation
+      } else if (this.aliveNeighbors() < 2) {
+        // underpopulation
         this.nextState = false;
       }
     }
@@ -39,10 +42,7 @@ class Cell {
   }
 
   collision() {
-    if (mouseX >= this.x
-      && mouseX < this.x + size
-      && mouseY >= this.y
-      && mouseY < this.y + size) {
+    if (mouseX >= this.x && mouseX < this.x + size && mouseY >= this.y && mouseY < this.y + size) {
       return true;
     }
 
