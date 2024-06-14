@@ -123,6 +123,7 @@ function mouseWheel(event) {
     size++;
   }
 
+  size = constrain(size, 10, 50);
   loop();
 }
 
@@ -142,4 +143,12 @@ function keyPressed() {
       step = true;
       break;
   }
+}
+
+function windowResized() {
+  cols = floor(windowWidth / size);
+  rows = floor(windowHeight / size);
+
+  resizeCanvas(cols * size, rows * size);
+  initGrid();
 }

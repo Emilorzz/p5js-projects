@@ -10,7 +10,7 @@ canvas {
 }
 
 body {
-  background-color: rgb(200, 100, 200);
+  background-color: rgb(20, 20, 20);
   margin: 0;
   display: flex;
   flex-wrap: wrap;
@@ -20,4 +20,28 @@ body {
 
   /* This centers our sketch vertically. */
   align-items: center;
+}
+
+#homeBtn {
+  position: absolute;
+  top: 1em;
+  left: 2em;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+a {
+  text-decoration: none;
+  font-size: 15pt;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: lowercase;
+  color: darkcyan;
+}
+
+a:hover {
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
 }
