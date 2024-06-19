@@ -13,6 +13,7 @@ let sat = 0;
 let scale = 50;
 let intensity = 0.3;
 let angle, angleStep;
+let maxDim;
 
 document.addEventListener("touchstart", {});
 
@@ -23,13 +24,14 @@ function setup() {
   angleMode(DEGREES);
   angle = 0;
   angleStep = 0.05;
+  maxDim = max(width, height);
 
   factor = width * 0.1;
 
   for (let i = 0; i < 2000; i++) {
     stars[i] = createVector(
-      random(-width * scale, width * scale) * factor,
-      random(-width * scale, width * scale) * factor,
+      random(-maxDim * scale, maxDim * scale) * factor,
+      random(-maxDim * scale, maxDim * scale) * factor,
       random(10, width * scale)
     );
     stars[i].d = random(size * 0.1, size * 0.5);
@@ -77,8 +79,8 @@ function draw() {
     star.z -= spd;
 
     if (star.z < 1) {
-      star.x = random(-width * scale, width * scale) * factor;
-      star.y = random(-width * scale, width * scale) * factor;
+      star.x = random(-maxDim * scale, maxDim * scale) * factor;
+      star.y = random(-maxDim * scale, maxDim * scale) * factor;
       let newZ = width * scale;
       star.z = newZ;
       star.pz = newZ;
