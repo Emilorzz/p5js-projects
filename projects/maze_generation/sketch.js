@@ -74,23 +74,23 @@ function generateMaze(initial) {
   }
 
   // if the stack is empty, the maze is finished
-  if (stack.length === 0) {
-    finished = true;
-    print("finished");
-    return;
+  while (stack.length > 0) {
+    current = stack[stack.length - 1];
+    visited.push(current);
+
+    // choose a random neighbor that has not been visited
+    let next = random(current.neighbors.filter((neighbor) => !visited.includes(neighbor)));
+    if (next) {
+      stack.push(next);
+      removeWall(current, next);
+      return;
+    } else {
+      stack.pop();
+    }
   }
 
-  current = stack[stack.length - 1];
-  visited.push(current);
-
-  // choose a random neighbor that has not been visited
-  let next = random(current.neighbors.filter((neighbor) => !visited.includes(neighbor)));
-  if (next) {
-    stack.push(next);
-    removeWall(current, next);
-  } else {
-    stack.pop();
-  }
+  finished = true;
+  print("finished");
 }
 
 function removeWall(curr, next) {
