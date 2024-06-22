@@ -6,10 +6,10 @@ let stack, visited;
 
 let start, current;
 
-let finished;
+let isFinished, doAnimate;
 
 function setup() {
-  size = 50;
+  size = 20;
   cols = floor(windowWidth / size);
   rows = floor(windowHeight / size);
   createCanvas(cols * size, rows * size);
@@ -21,7 +21,8 @@ function setup() {
 function initGrid() {
   stack = [];
   visited = [];
-  finished = false;
+  isFinished = false;
+  doAnimate = true;
 
   grid = [];
   for (let i = 0; i < cols; i++) {
@@ -51,7 +52,7 @@ function draw() {
   showGrid();
   generateMaze();
 
-  if (finished) {
+  if (isFinished) {
     noLoop();
     showGrid();
     drawStartEnd();
@@ -83,13 +84,15 @@ function generateMaze(initial) {
     if (next) {
       stack.push(next);
       removeWall(current, next);
-      return;
+      if (doAnimate) {
+        return;
+      }
     } else {
       stack.pop();
     }
   }
 
-  finished = true;
+  isFinished = true;
   print("finished");
 }
 

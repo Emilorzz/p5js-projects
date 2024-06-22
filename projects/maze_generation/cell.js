@@ -9,7 +9,7 @@ class Cell {
     let col;
     let validNeighbors = this.neighbors.filter((neighbor) => !visited.includes(neighbor));
 
-    if (this === current && !finished) {
+    if (this === current && !isFinished) {
       col = color(255, 0, 255);
     } else {
       if (validNeighbors.length > 0) {
