@@ -9,11 +9,12 @@ let start, current;
 let isFinished, doAnimate;
 
 function setup() {
-  size = 20;
+  size = 50;
   cols = floor(windowWidth / size);
   rows = floor(windowHeight / size);
   createCanvas(cols * size, rows * size);
 
+  doAnimate = true;
   initGrid();
   // print(grid);
 }
@@ -22,7 +23,6 @@ function initGrid() {
   stack = [];
   visited = [];
   isFinished = false;
-  doAnimate = true;
 
   grid = [];
   for (let i = 0; i < cols; i++) {
@@ -106,5 +106,17 @@ function showGrid() {
     for (let j = 0; j < rows; j++) {
       grid[i][j].show();
     }
+  }
+}
+
+function keyPressed() {
+  switch (key) {
+    case " ":
+      doAnimate = !doAnimate;
+      break;
+    case "r":
+      initGrid();
+      loop();
+      break;
   }
 }
