@@ -110,6 +110,7 @@ function showGrid() {
 }
 
 function keyPressed() {
+  // man i should have been using the key variable all along
   switch (key) {
     case " ":
       doAnimate = !doAnimate;
