@@ -17,3 +17,4 @@ This repository holds all my pastime p5js projects, and documents the learning i
 - Basic Shaders
   - [Introduction to p5.js shaders](https://itp-xstory.github.io/p5js-shaders/#/)
   - ["_An introduction to Shader Art Coding_" by kishimisu](https://www.youtube.com/watch?v=f4s1h2YETNY)
+- Maze Generation (Stack-based)
