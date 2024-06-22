@@ -9,7 +9,7 @@ let start, current;
 let finished;
 
 function setup() {
-  size = 20;
+  size = 50;
   cols = floor(windowWidth / size);
   rows = floor(windowHeight / size);
   createCanvas(cols * size, rows * size);
@@ -48,13 +48,14 @@ function initGrid() {
 function draw() {
   background(220);
 
-  if (finished) {
-    drawStartEnd();
-    noLoop();
-  }
-
   showGrid();
   generateMaze();
+
+  if (finished) {
+    noLoop();
+    showGrid();
+    drawStartEnd();
+  }
 }
 
 function drawStartEnd() {
