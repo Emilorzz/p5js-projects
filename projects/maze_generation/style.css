@@ -1,0 +1,47 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  background-color: rgb(20, 20, 20);
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+
+  /* This centers our sketch horizontally. */
+  justify-content: center;
+
+  /* This centers our sketch vertically. */
+  align-items: center;
+}
+
+#homeBtn {
+  position: absolute;
+  top: 1em;
+  left: 2em;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+a {
+  text-decoration: none;
+  font-size: 15pt;
+  font-family: "Courier New", Courier, monospace;
+  text-transform: lowercase;
+  color: darkcyan;
+}
+
+a:hover {
+  font-weight: bold;
+  color: gold;
+  text-transform: uppercase;
+}
