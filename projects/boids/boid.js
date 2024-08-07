@@ -1,5 +1,5 @@
 class Boid {
-  constructor(x, y) {
+  constructor() {
     this.pos = createVector(random(width), random(height));
     this.vel = p5.Vector.random2D().setMag(random(2, maxSpeed));
     this.acc = createVector();
@@ -14,11 +14,14 @@ class Boid {
 
   show() {
     let angle = this.vel.heading();
+
+    // change saturation based on amount of neighboring boids in sight
     this.sat = lerp(this.sat, map(this.neighbors.length, nMin, nMax, -100, 200), lerpSpeed);
 
     noStroke();
     fill(this.hue, this.sat, 100);
 
+    // draw triangle facing velocity vector
     push();
     translate(this.pos.x, this.pos.y);
     rotate(angle);
@@ -27,22 +30,23 @@ class Boid {
   }
 
   rules() {
+    // executes as flocking rules by adding their vectors to the acceleration vector
     this.acc.add(this.avoid().mult(2));
     this.acc.add(this.match().mult(1.5));
     this.acc.add(this.proximity().mult(1));
+
     this.acc.add(this.mouse());
   }
 
   update() {
+    // update position and velocity, and resets acceleration vector
     this.pos.add(this.vel);
     this.vel.add(this.acc).limit(maxSpeed);
     this.acc.mult(0);
 
-    if (this.pos.x > width + this.size / 2) this.pos.x = -this.size / 2;
-    if (this.pos.x < 0 - this.size / 2) this.pos.x = width;
-    if (this.pos.y > height + this.size / 2) this.pos.y = -this.size / 2;
-    if (this.pos.y < 0 - this.size / 2) this.pos.y = height;
+    this.edgeWrapping();
 
+    // changes size based on number of neighbors
     this.size = lerp(
       this.size,
       constrain(map(this.neighbors.length, nMin, nMax, sizeMin, sizeMax), sizeMin, sizeMax),
@@ -50,9 +54,17 @@ class Boid {
     );
   }
 
+  edgeWrapping() {
+    if (this.pos.x > width + this.size / 2) this.pos.x = -this.size / 2;
+    if (this.pos.x < 0 - this.size / 2) this.pos.x = width;
+    if (this.pos.y > height + this.size / 2) this.pos.y = -this.size / 2;
+    if (this.pos.y < 0 - this.size / 2) this.pos.y = height;
+  }
+
   getNeighbors() {
     this.neighbors = [];
 
+    // finds neighboring boids within vision
     for (let boid of boids) {
       let d = dist(this.pos.x, this.pos.y, boid.pos.x, boid.pos.y);
 
@@ -63,6 +75,7 @@ class Boid {
   }
 
   mouse() {
+    // calculates force towards mouse cursor.
     if (mouseIsPressed) {
       let d = dist(this.pos.x, this.pos.y, mouseX, mouseY);
       let direction = p5.Vector.sub(createVector(mouseX, mouseY), this.pos)
@@ -76,6 +89,7 @@ class Boid {
         addition += 0.01;
       }
 
+      // add or subtract vector
       return mouseButton == LEFT ? direction : direction.mult(-1);
     }
   }
@@ -83,6 +97,7 @@ class Boid {
   avoid() {
     let direction = createVector();
 
+    // wanting to steer away from all neighbors, we return average vector between them
     for (let boid of this.neighbors) {
       let d = dist(this.pos.x, this.pos.y, boid.pos.x, boid.pos.y);
       let diff = p5.Vector.sub(this.pos, boid.pos).div(d * d);
@@ -100,6 +115,7 @@ class Boid {
   match() {
     let direction = createVector();
 
+    // adds the average velocity of each neighboring boid to steer in their general direction
     for (let boid of this.neighbors) {
       direction.add(boid.vel);
     }
@@ -115,6 +131,7 @@ class Boid {
   proximity() {
     let direction = createVector();
 
+    // to make boids stick together, the average of all neighbors positions are added
     for (let boid of this.neighbors) {
       direction.add(boid.pos);
     }
