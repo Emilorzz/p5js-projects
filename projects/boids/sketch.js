@@ -23,7 +23,7 @@ function setup() {
   createCanvas(w, h);
   colorMode(HSB);
 
-  generateBoids(200);
+  generateBoids(200, random(width), random(height));
 }
 
 function draw() {
@@ -45,7 +45,7 @@ function generateBoids(n, x, y) {
 
 function mousePressed() {
   if (keyIsDown(17) && mouseButton == LEFT) {
-    generateBoids(50);
+    generateBoids(50, mouseX, mouseY);
   }
 }
 

@@ -1,6 +1,6 @@
 class Boid {
-  constructor() {
-    this.pos = createVector(random(width), random(height));
+  constructor(x, y) {
+    this.pos = createVector(x, y);
     this.vel = p5.Vector.random2D().setMag(random(2, maxSpeed));
     this.acc = createVector();
 
